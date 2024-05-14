@@ -22,7 +22,8 @@ const Board = () => {
   const NUMBER_OF_MINES = 30;
   const BOARD_SIZE = 20;
   const [flagLeft, setFlagLeft] = useState(NUMBER_OF_MINES);
-  const [time, setTime] = useState(0);
+  const [second, setSecond] = useState(0);
+  const [minute, setMinute] = useState(0);
   const intervalRef = useRef<NodeJS.Timer>();
 
   const resetBoard = () => {
@@ -31,7 +32,8 @@ const Board = () => {
     });
     setUp({ size: BOARD_SIZE });
     clearInterval(intervalRef.current);
-    setTime(0);
+    setSecond(0);
+    setMinute(0);
   };
 
   useEffect(() => {
@@ -41,7 +43,11 @@ const Board = () => {
   useEffect(() => {
     if (mineList.length != 0) {
       const id = setInterval(() => {
-        setTime((time) => time + 1);
+        setSecond((second) => second + 1);
+        if (second == 60) {
+          setMinute((minute) => minute + 1);
+          setSecond(0);
+        }
       }, 1000);
 
       intervalRef.current = id;
@@ -54,7 +60,7 @@ const Board = () => {
     return () => {
       clearInterval(intervalRef.current);
     };
-  }, [mineList, gameStatus]);
+  }, [mineList, gameStatus, second]);
 
   return (
     <div className="text-center">
@@ -83,7 +89,9 @@ const Board = () => {
             </button>
           </div>
 
-          <div>{time}</div>
+          <div>
+            {minute}: {second}
+          </div>
         </div>
       </div>
       <table>
