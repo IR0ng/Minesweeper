@@ -1,5 +1,5 @@
-export enum TILE_STATUS {
+export enum BLOCK_STATUS {
   HIDDEN = "HIDDEN",
-  MARKED = "MARKED",
-  SHOW = "SHOW",
+  FLAGGED = "FLAGGED",
+  SHOWED = "SHOWED",
 }
